@@ -10,22 +10,15 @@ globals [
 turtles-own [
   ethicality  ;; moral character (0-100)
   myscore     ;; fitness score, determines whether they live or die
+  behavior   ;; records whether the people are acting ethically or not.
 ]
 
 ;; The setup is divided into 2 procedures
 to setup
   clear-all
-  ;setup-parameters
   setup-turtles
   reset-ticks 
 end
-
-;; Define Parameters
-;to setup-parameters
- ; set relative-cost 25
-  ;set diversity 10
-  ;set average-ethicality 70
-;end
 
 ;; Create agents
 to setup-turtles
@@ -51,6 +44,7 @@ to go
   interact
   reproduce
   update-visuals
+  update-plots
   tick              
 end
 
@@ -74,10 +68,12 @@ to interact-with [partner]
   let chance random 100
   if ethicality >= chance [
     act-ethically partner
+    set behavior "ethical"
   ]
   
   if ethicality < chance [
     act-unethically partner
+    set behavior "unethical"
   ]
 end
 
